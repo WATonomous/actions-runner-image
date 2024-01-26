@@ -26,6 +26,7 @@ RUN apt-get update -y \
     zip \
     wget \
     jq \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Download latest git-lfs version
