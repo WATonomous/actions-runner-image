@@ -28,6 +28,7 @@ RUN apt-get update -y \
     jq \
     python3-pip \
     rsync \
+    openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Download latest git-lfs version
