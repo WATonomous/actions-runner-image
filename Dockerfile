@@ -44,4 +44,7 @@ RUN export ARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
     && which docker-compose \
     && docker compose version
 
+# Python packages get installed to ~/.local by default
+ENV PATH="${PATH}:/home/runner/.local/bin"
+
 USER runner
