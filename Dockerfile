@@ -35,6 +35,7 @@ RUN apt-get update -y \
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt-get install -y --no-install-recommends git-lfs
 
+# Install Docker Compose
 RUN export ARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
     && echo "ARCH: $ARCH" \
     && if [ "$ARCH" = "arm64" ]; then export ARCH=aarch64 ; fi \
@@ -45,6 +46,11 @@ RUN export ARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
     && ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose \
     && which docker-compose \
     && docker compose version
+
+# Install sentry-cli
+RUN wget -q -O /usr/local/bin/sentry-cli https://github.com/getsentry/sentry-cli/releases/download/2.28.6/sentry-cli-Linux-x86_64 \
+    && echo "790c1c4a0e59112d25b8efdf00211881851f4f33443c4e885df336d16b88b457 /usr/local/bin/sentry-cli" | sha256sum -c - \
+    && chmod +x /usr/local/bin/sentry-cli
 
 # Python packages get installed to ~/.local by default
 ENV PATH="${PATH}:/home/runner/.local/bin"
