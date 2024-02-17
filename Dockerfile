@@ -29,7 +29,6 @@ RUN apt-get update -y \
     python3-pip \
     rsync \
     openssh-client \
-    podman \
     && rm -rf /var/lib/apt/lists/*
 
 # Download latest git-lfs version
