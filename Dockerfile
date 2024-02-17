@@ -30,6 +30,10 @@ RUN apt-get update -y \
     rsync \
     openssh-client \
     podman \
+    # required by podman
+    slirp4netns \
+    # required by podman rootless
+    uidmap \
     && rm -rf /var/lib/apt/lists/*
 
 # Download latest git-lfs version
