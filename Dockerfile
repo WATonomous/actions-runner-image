@@ -63,4 +63,4 @@ ENV PATH="${PATH}:/home/runner/.local/bin"
 USER runner
 
 # Used for uploading/downloading artifacts
-RUN python3 -m pip install s3cmd
+RUN python3 -m pip install s3cmd podman-compose
