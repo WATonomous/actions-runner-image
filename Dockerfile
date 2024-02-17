@@ -29,11 +29,6 @@ RUN apt-get update -y \
     python3-pip \
     rsync \
     openssh-client \
-    podman \
-    # required by podman
-    slirp4netns \
-    # required by podman rootless
-    uidmap \
     && rm -rf /var/lib/apt/lists/*
 
 # Download latest git-lfs version
@@ -57,20 +52,10 @@ RUN wget -q -O /usr/local/bin/sentry-cli https://github.com/getsentry/sentry-cli
     && echo "790c1c4a0e59112d25b8efdf00211881851f4f33443c4e885df336d16b88b457 /usr/local/bin/sentry-cli" | sha256sum -c - \
     && chmod +x /usr/local/bin/sentry-cli
 
-# Apply podman sysctl patch:
-# https://github.com/containers/podman/issues/13194#issue-1129040551
-RUN cat <<EOF > /etc/containers/containers.conf
-[containers]
-volumes = [
-	"/proc:/proc",
-]
-default_sysctls = []
-EOF
-
 # Python packages get installed to ~/.local by default
 ENV PATH="${PATH}:/home/runner/.local/bin"
 
 USER runner
 
 # Used for uploading/downloading artifacts
-RUN python3 -m pip install s3cmd podman-compose
+RUN python3 -m pip install s3cmd
