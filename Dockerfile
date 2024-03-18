@@ -3,7 +3,9 @@
 
 ARG TARGETPLATFORM=linux/amd64
 # This is the official actions-runner image packaged with gha-runner-scale-set
-ARG BASE_IMAGE=ghcr.io/actions/actions-runner:2.312.0@sha256:da57c2566f6f0c3826fb0f41029ec9c0ba23070db789b662166687eeaf0298cc
+# We are using `latest` intentionally for easier updates because GitHub regularly
+# prevents old runners from receiving jobs.
+ARG BASE_IMAGE=ghcr.io/actions/actions-runner:latest
 
 FROM --platform=$TARGETPLATFORM $BASE_IMAGE
 
