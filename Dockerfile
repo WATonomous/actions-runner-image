@@ -28,6 +28,7 @@ RUN apt-get update -y \
     zip \
     wget \
     jq \
+    python3-dev \
     python3-pip \
     rsync \
     openssh-client \
