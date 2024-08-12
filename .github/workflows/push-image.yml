@@ -51,7 +51,7 @@ jobs:
         with:
           context: .
           outputs: |
-            type=registry,compression=zstd
+            type=registry,compression=uncompressed
           build-args: |
             DOCKER_METADATA_OUTPUT_JSON
           tags: ${{ steps.meta.outputs.tags }}
