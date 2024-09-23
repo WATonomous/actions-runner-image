@@ -63,3 +63,7 @@ USER runner
 
 # Used for uploading/downloading artifacts
 RUN python3 -m pip install s3cmd
+
+# Make everything in the home directory readable by everyone.
+# This facilitates using the image when unpacked with ducc: https://github.com/cvmfs/cvmfs/tree/cd523a3241878c697aba7e3bee43c76a3dc11ebc/ducc
+RUN find $HOME -type d -exec chmod o+rx {} \; && find $HOME -type f -exec chmod o+r {} \;
