@@ -34,6 +34,7 @@ RUN apt-get update -y \
     openssh-client \
     build-essential \
     zstd \
+    bc \
     && rm -rf /var/lib/apt/lists/*
 
 # Download latest git-lfs version
