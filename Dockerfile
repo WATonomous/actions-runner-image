@@ -64,4 +64,5 @@ ENV PATH="${PATH}:/home/runner/.local/bin"
 USER runner
 
 # Used for uploading/downloading artifacts
-RUN python3 -m pip install s3cmd
+# --break-system-packages: the base image's Python is PEP 668 externally-managed; installs to ~/.local (already on PATH)
+RUN python3 -m pip install --break-system-packages s3cmd
