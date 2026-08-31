@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      actions: write
 
     steps:
       - name: Checkout repository
@@ -49,3 +50,9 @@ jobs:
             DOCKER_METADATA_OUTPUT_JSON
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Keep scheduled builds enabled (GitHub auto-disables them after 60 days of repo inactivity)
+        if: github.event_name != 'pull_request'
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/push-image.yml/enable"
+        env:
+          GH_TOKEN: ${{ github.token }}
