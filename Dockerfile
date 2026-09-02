@@ -58,11 +58,17 @@ RUN wget -q -O /usr/local/bin/sentry-cli https://github.com/getsentry/sentry-cli
     && echo "790c1c4a0e59112d25b8efdf00211881851f4f33443c4e885df336d16b88b457 /usr/local/bin/sentry-cli" | sha256sum -c - \
     && chmod +x /usr/local/bin/sentry-cli
 
+# Used for uploading/downloading artifacts. System-wide (root): a ~/.local install breaks when the
+# runner executes with a different $HOME (apptainer) because Python's user-site stops resolving ("No module named 'S3'").
+RUN python3 -m pip install --break-system-packages s3cmd
+
+# Let workflow-level `pip install` steps work on the PEP 668 externally-managed base.
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+
 # Python packages get installed to ~/.local by default
 ENV PATH="${PATH}:/home/runner/.local/bin"
 
 USER runner
 
-# Used for uploading/downloading artifacts
-# --break-system-packages: the base image's Python is PEP 668 externally-managed; installs to ~/.local (already on PATH)
-RUN python3 -m pip install --break-system-packages s3cmd
+# Fails the build if s3cmd cannot import its modules.
+RUN s3cmd --version
